@@ -85,4 +85,8 @@ The system uses `fuzzywuzzy` to auto-correct user-entered symptoms to handle typ
 * Ensure the `model/RandomForest.pkl` exists.
 
 ## 📷 Screenshot
+![image](https://github.com/user-attachments/assets/69f5f5c2-8116-4b7d-aeaf-25c55ebc44b7)
+
+![image](https://github.com/user-attachments/assets/742826e9-ff2c-422a-8604-5c3734227351)
+
 
