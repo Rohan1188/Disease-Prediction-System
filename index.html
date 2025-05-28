@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Health Care Center</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+<style>
+    body {
+        background-image: url('static/bgCover.jpg');
+        background-size: cover;
+        background-position: center;
+        background-color: rgba(0, 0, 0, 0.3);
+        background-blend-mode: multiply;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .logo {
+        width: 100%;
+        height: 60px;
+        color: #f0f0f0;
+        padding-left: 20px;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        font-size: 22px;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+    .myimg {
+        width: 45px;
+        height: 45px;
+        margin-right: 15px;
+        border-radius: 50%;
+        border: 2px solid white;
+    }
+
+    .container {
+        background-color: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(12px);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 20px;
+        padding: 35px;
+        margin: 50px auto;
+        max-width: 800px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .title-symptoms {
+        color: #222;
+        font-size: 26px;
+        margin-bottom: 25px;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .message-text {
+        color: crimson;
+        font-weight: 500;
+        text-align: center;
+    }
+
+    .btn {
+        background-color: #6a00ff;
+        border: none;
+        border-radius: 10px;
+        padding: 12px 24px;
+        color: #fff;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn:hover {
+        background-color: #4b00b4;
+    }
+
+    .footer {
+        background-color: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(8px);
+        padding: 12px 20px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        color: #fff;
+        font-size: 14px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: rgba(0, 0, 0, 0.35); background-blend-mode: overlay; background-image: linear-gradient(to bottom, #10045F, #3424A1); box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);">
+    <div class="container-fluid">
+        <div class="logo">
+            <img class="myimg" src="static/img.png" alt="Logo">
+            <h5 class="titleName">Disease Prediction and Medical Recommendation System</h5>
+        </div>
+        <a class="navbar-brand" href="" id="resetButton">Reset</a>
+        </button>
+    </div>
+</nav>
+
+<!-- main form of page -->
+<div class="container my-4 mt-4 bg-glass p-4 rounded">
+    <form action="/predict" method="post">
+        <div class="form-group">
+            <label for="symptoms" class="title-symptoms" style="margin-bottom:10px">Type your symptoms:</label>
+            <input type="text" class="form-control" id="symptoms" name="symptoms" placeholder="Type symptoms such as headache, mild fever, acidity, etc...">
+        </div>
+        <br>
+        {% if message %}
+        <p class="message-text">{{ message }}</p>
+        {% endif %}
+        <br>
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-danger btn-lg" style="width: 30%; padding: 14px; margin-bottom: 5px;">Predict</button>
+        </div>
+    </form>
+</div>
+
+{% if predicted_disease %}
+<!-- Results -->
+<h4 class="text-center my-4 mt-4">Predicted Results:</h4>
+<div class="container my-4 mt-4">
+    <table class="table">
+        <thead>
+            <tr>
+                <h6>Showing predictions for {{symptoms}}</h6>
+            </tr>
+        </thead>
+        <thead>
+            <tr>
+                <th scope="col">Disease</th>
+                <th scope="col">{{predicted_disease}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>Description</th>
+                <td>{{ dis_des }}</td>
+            </tr>
+            <tr>
+                <th>Precautions</th>
+                <td>
+                    <ul>
+                        {% for i in my_precautions %}
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>Medications</th>
+                <td>
+                    <ul>
+                        {% for i in medications %}
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>Workout</th>
+                <td>
+                    <ul>
+                        {% for i in workout %}
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>Diet</th>
+                <td>
+                    <ul>
+                        {% for i in my_diet %}
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+<div class="footer">
+    <h6 class="mt-1 my-1 text-center text-green"><i> This is an AI-based prediction system for educational purposes only. Always consult with qualified healthcare professionals for accurate diagnosis and treatment. </i></h6>
+</div>
+
+</body>
+</html>
